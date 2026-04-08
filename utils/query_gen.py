@@ -2,14 +2,14 @@
 
 from sys import exit, stderr
 
-base_query_gl = """SELECT ra, dec, parallax, phot_g_mean_mag as g_mag, bp_rp FROM gaiadr3.gaia_source_lite
+base_query_gl = """SELECT ra, dec, parallax, phot_g_mean_mag as g_mag, bp_rp FROM gaiadr3.gaia_source
 WHERE DISTANCE(POINT(COORD1(IVO_SIMBADPOINT('m6')), COORD2(IVO_SIMBADPOINT('m6'))), POINT(ra, dec)) < obj_angrad/60.0
     AND phot_g_mean_mag IS NOT NULL
     AND bp_rp IS NOT NULL
 ORDER BY parallax ASC"""
 
 
-base_query_op = """SELECT ra, dec, parallax, phot_g_mean_mag as g_mag, bp_rp FROM gaiadr3.gaia_source_lite
+base_query_op = """SELECT ra, dec, parallax, phot_g_mean_mag as g_mag, bp_rp FROM gaiadr3.gaia_source
 WHERE DISTANCE(POINT(COORD1(IVO_SIMBADPOINT('m6')), COORD2(IVO_SIMBADPOINT('m6'))), POINT(ra, dec)) < obj_angrad/60.0
 	AND parallax > 0.9*obj_par
 	AND parallax < 1.1*obj_par
@@ -27,7 +27,7 @@ obj_type = input(f"{'Query type (OC/GC): ':>23}")
 if obj_type.upper() == 'OC':
     base_query = base_query_op
 elif obj_type.upper() == 'GC':
-    base_query = base_query_gc
+    base_query = base_query_gl
 else:
     print(f"Unknown object type [{obj_type}]. Exiting", file=stderr)
     exit(1)

@@ -1,7 +1,7 @@
-SELECT ra, dec, parallax, phot_g_mean_mag as g_mag, bp_rp FROM gaiadr3.gaia_source_lite
-WHERE DISTANCE(POINT(COORD1(IVO_SIMBADPOINT('M14')), COORD2(IVO_SIMBADPOINT('M14'))), POINT(ra, dec)) < 6.75/60.0
-	AND parallax > 0.9*0.129
-	AND parallax < 1.1*0.129
+SELECT ra, dec, parallax, phot_g_mean_mag as g_mag, bp_rp FROM gaiadr3.gaia_source
+WHERE DISTANCE(POINT(COORD1(IVO_SIMBADPOINT('M29')), COORD2(IVO_SIMBADPOINT('M29'))), POINT(ra, dec)) < 6.35/60.0
+	AND parallax > 0.9*0.553
+	AND parallax < 1.1*0.553
     AND phot_g_mean_mag IS NOT NULL
     AND bp_rp IS NOT NULL
 ORDER BY parallax ASC
