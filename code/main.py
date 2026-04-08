@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+
+import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -16,7 +20,8 @@ def project_from_line(x1, slope: float):
     return x1 / np.sqrt(1 + slope ** 2)
 
 
-def load_data():
+def load_data(filename):
+    filepath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', filename)
     ra, dec, parallax, g_mag, bp_rp = np.loadtxt(filepath, dtype='str', delimiter=',', skiprows=1, unpack=True, encoding='utf8')
     return g_mag.astype('float'), bp_rp.astype('float')
 
@@ -36,7 +41,7 @@ def draw_chart(g_mag: np.array, bp_rp: np.array, fit_params: tuple[float, float,
     
     # add approximate fit to the chart
     if fit_params:
-        plt.plot(fit_params[0:2], fit_params[1:3], linewidth=2, c=COLOUR_LINE)
+        plt.plot(fit_params[0:2], fit_params[2:4], linewidth=2, c=COLOUR_LINE)
 
     # setting the chart
     plt.title(OBJECT_TITLE)
@@ -54,13 +59,13 @@ def draw_chart(g_mag: np.array, bp_rp: np.array, fit_params: tuple[float, float,
     # showing the chart
     plt.show()
 
-def export():
-    if output_file:
-        with open(output_file, 'w') as file:
-            print(OBJECT_TITLE, x_min, x_max, y_min, y_max, sep=',', file=file) 
+def export(output_filename, fit_params):
+    filepath = os.path.join(os.path.dirname(os.path.dirname(__file__)), output_filename)
+    with open(filepath, 'a') as file:
+        print(OBJECT_TITLE, OBJECT_TYPE, *fit_params, sep=',', file=file) 
 
 if __name__ == '__main__':
-    g_mag, bp_rp = load_data()
+    g_mag, bp_rp = load_data(filepath)
     fit_params = simplify_cluster(g_mag, bp_rp)
-    print(fit_params)
     draw_chart(g_mag, bp_rp, fit_params)
+    export(output_file, fit_params)
