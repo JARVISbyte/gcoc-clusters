@@ -1,4 +1,8 @@
-# Dependencies
+# GC-OC clusters
+`gcoc-clusters` is a set of scripts used to assist in bulk-downloading data from Gaia Data Release 3 for globular and open clusters (gc/oc).
+The main goal was to build cluster-specific Hertzsprung–Russell diagrams for several globular and open clusters to experimentally show the difference in their respective star compositions. This repository contains data for several globular (M14, M56, M79) and several open (M6, M29, M103) cluster.
+
+### Dependencies
 The code depends on two non-system libraries:
 ```
 NumPy
